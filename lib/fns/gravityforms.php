@@ -9,6 +9,8 @@ namespace GFtoXML\gravityforms;
  */
 function gforms_after_submission( $entry, $form )
 {
+    $filename = 'form-' . $entry['form_id'] . '_entry-' . $entry['id'] . '.xml';
+
     // Build the string for our $lead_source
     $search = ['http://','https://','/'];
     $site_url = str_replace( $search, '', site_url( '', '' ) );
@@ -60,5 +62,6 @@ function gforms_after_submission( $entry, $form )
 
     // Generate XML
     $xml = \GFtoXML\ArrayToXml\ArrayToXml::convert( $data, 'form' );
+    \GFtoXML\files\write_file( $xml, $filename, 'xml' );
 }
 add_action( 'gform_after_submission', __NAMESPACE__ . '\\gforms_after_submission', 10, 2 );

@@ -14,4 +14,5 @@
 
 include_once 'lib/classes/array-to-xml.php';
 include_once 'lib/fns/debug.php';
+include_once 'lib/fns/files.php';
 include_once 'lib/fns/gravityforms.php';
