@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+  <form>
+    <time>{{timestamp}}</time>
+    <first_name>{{first_name}}</first_name>
+    <last_name>{{last_name}}</last_name>
+    <phone>{{phone}}</phone>
+    <email>{{email}}</email>
+    <type_of_cancer>{{type_of_cancer}}</type_of_cancer>
+    <request_type>{{request_type}}</request_type>
+    <lead_source>{{lead_source}}</lead_source>
+  </form>
+</xml>
