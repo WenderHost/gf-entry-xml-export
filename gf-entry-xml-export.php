@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:     Gravity Forms Entry XML Export for Provision IMS
+ * Plugin Name:     Gravity Forms Entry XML Export
  * Plugin URI:      https://github.com/mwender
  * Description:     Writes out Gravity Forms entries as XML files
  * Author:          Michael Wender
