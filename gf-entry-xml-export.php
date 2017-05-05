@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:     Gravity Forms Entry XML Export
- * Plugin URI:      https://github.com/mwender
+ * Plugin URI:      https://github.com/WenderHost/gf-entry-xml-export
  * Description:     Writes out Gravity Forms entries as XML files
  * Author:          Michael Wender
  * Author URI:      https://michaelwender.com
