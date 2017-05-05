@@ -28,6 +28,7 @@ function new_keys( $new_keys, $form_id )
     
     return $new_keys;
 }
+add_filter( 'gf_to_xml_array_keys', 'new_keys', 10, 2 );
 ```
 
 == Installation ==
