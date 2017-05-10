@@ -18,7 +18,7 @@ function gforms_after_submission( $entry, $form )
 
     // Initialize array which will hold our form data
     $data = array();
-    $data['time'] = $entry['date_created'];
+    $data['time'] = date( 'c', strtotime( $entry['date_created'] ) );
     $data['lead_source'] = $lead_source;
 
     // Map form data to an array

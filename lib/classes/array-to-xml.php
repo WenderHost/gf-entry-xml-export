@@ -130,9 +130,12 @@ class ArrayToXml
             $key = str_replace(' ', '_', $key);
         }
 
-        $search = [':','?',',',';'];
+        $search = [':','?',',',';','/','\\'];
         $key = str_replace( $search, '', $key );
         $key = strtolower( $key );
+
+        $search = ['__'];
+        $key = str_replace( $search, '_', $key );
 
         $child = $this->document->createElement($key);
         $element->appendChild($child);
