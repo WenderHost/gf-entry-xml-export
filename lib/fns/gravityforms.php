@@ -9,7 +9,11 @@ namespace GFtoXML\gravityforms;
  */
 function gforms_after_submission( $entry, $form )
 {
-    $filename = 'form-' . $entry['form_id'] . '_entry-' . $entry['id'] . '.xml';
+    $url = get_home_url();
+    $url_search = ['www.','http://','https://','.com','.net','.org','.biz','.us'];
+    $sitename = str_replace( $url_search, '', $url );
+    $sitename = str_replace( '.', '-', $sitename );
+    $filename = $sitename . '_form-' . $entry['form_id'] . '_entry-' . $entry['id'] . '.xml';
 
     // Build the string for our $lead_source
     $search = ['http://','https://','/'];
