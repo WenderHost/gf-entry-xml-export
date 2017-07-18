@@ -40,6 +40,8 @@ add_filter( 'gf_to_xml_array_keys', 'new_keys', 10, 2 );
 
 = 1.0.1 =
 * Adding sitename to XML export filename
+* Changing date value to ISO 8601 date
+* Removing illegal characters from XML tag names
 
 = 1.0.0 =
 * Initial release
