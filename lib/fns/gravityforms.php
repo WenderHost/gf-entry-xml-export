@@ -15,15 +15,10 @@ function gforms_after_submission( $entry, $form )
     $sitename = str_replace( '.', '-', $sitename );
     $filename = $sitename . '_form-' . $entry['form_id'] . '_entry-' . $entry['id'] . '.xml';
 
-    // Build the string for our $lead_source
-    $search = ['http://','https://','/'];
-    $site_url = str_replace( $search, '', site_url( '', '' ) );
-    $lead_source = $site_url . ' - ' . $form['title'];
-
     // Initialize array which will hold our form data
     $data = array();
     $data['time'] = date( 'c', strtotime( $entry['date_created'] ) );
-    $data['lead_source'] = $lead_source;
+
 
     // Map form data to an array
     foreach( $form['fields'] as $field )
@@ -45,8 +40,17 @@ function gforms_after_submission( $entry, $form )
             $label = $field['label'];
             $value = $entry[$field['id']];
             $data[$label] = $value;
+            if( 'page_title' == $field['label'] )
+                $page_title = $value;
         }
     }
+
+    // Build the string for our $lead_source
+    $search = ['http://','https://','/'];
+    $site_url = str_replace( $search, '', site_url( '', '' ) );
+    $lead_source = ( isset( $page_title ) && ! empty( $page_title ) )? $page_title :  $site_url;
+    $lead_source.= ' - ' . $form['title']
+    $data['lead_source'] = $lead_source;
 
     // Rename keys
     $new_keys = [];
