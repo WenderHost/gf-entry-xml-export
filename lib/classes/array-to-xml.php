@@ -130,14 +130,27 @@ class ArrayToXml
             $key = str_replace(' ', '_', $key);
         }
 
-        $search = [':','?',',',';','/','\\'];
+        /* Normalize $key into a valid XML element name */
+
+        // strips any non alphabetical character in the first position
+        $key = preg_replace('/^[^a-zA-Z]{1}/', '', $key);
+
+        // using regex to check for xml is overkill
+        $key = (strpos(strtolower($key), 'xml') === 0) ? substr($key, 3) : $key;
+
+        // strips any whitespace
+        $key = str_replace(' ', '', $key);
+
+        // remove invalid characters for XML element names
+        $search = [':','?',',',';','/','\\','[',']'];
         $key = str_replace( $search, '', $key );
         $key = strtolower( $key );
 
+        // convert double underscores to single underscore
         $search = ['__'];
         $key = str_replace( $search, '_', $key );
 
-        $child = $this->document->createElement($key);
+        $child = $this->document->createElement( $key ) ;
         $element->appendChild($child);
         $this->convertElement($child, $value);
     }
