@@ -3,7 +3,7 @@ Contributors: thewebist
 Tags: gravityforms, xml
 Requires at least: 3.7
 Tested up to: 4.7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,10 @@ add_filter( 'gf_to_xml_array_keys', 'new_keys', 10, 2 );
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+
+= 1.0.3 =
+* Adding additional normalization for conversion of GF form field names to valid XML element names
+* BUGFIX: Adding missing semicolon
 
 = 1.0.2 =
 * Adding `page_title` to lead source
