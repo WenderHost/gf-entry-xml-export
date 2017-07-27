@@ -49,7 +49,7 @@ function gforms_after_submission( $entry, $form )
     $search = ['http://','https://','/'];
     $site_url = str_replace( $search, '', site_url( '', '' ) );
     $lead_source = ( isset( $page_title ) && ! empty( $page_title ) )? $page_title :  $site_url;
-    $lead_source.= ' - ' . $form['title']
+    $lead_source.= ' - ' . $form['title'];
     $data['lead_source'] = $lead_source;
 
     // Rename keys
