@@ -45,11 +45,26 @@ function gforms_after_submission( $entry, $form )
         }
     }
 
-    // Build the string for our $lead_source
+    /**
+     * Build the $lead_source string.
+     *
+     * Format: SITE_URL - PAGE_TITLE
+     */
+    $lead_source = [];
+
+    // Add $site_url to $lead_source
     $search = ['http://','https://','/'];
     $site_url = str_replace( $search, '', site_url( '', '' ) );
-    $lead_source = ( isset( $page_title ) && ! empty( $page_title ) )? $page_title :  $site_url;
-    $lead_source.= ' - ' . $form['title'];
+    $lead_source[] = $site_url;
+
+    // Add $page_title to $lead_source
+    if( isset( $page_title ) && ! empty( $page_title ) )
+        $lead_source[] = $page_title;
+
+    $lead_source = implode( ' - ', $lead_source );
+
+    // Add the $lead_source to our form data array that we'll
+    // use to build the XML
     $data['lead_source'] = $lead_source;
 
     // Rename keys

@@ -38,6 +38,9 @@ add_filter( 'gf_to_xml_array_keys', 'new_keys', 10, 2 );
 
 == Changelog ==
 
+= 1.0.4 =
+* Updating `$lead_source` variable to be `SITE_URL - PAGE_TITLE`
+
 = 1.0.3 =
 * Adding additional normalization for conversion of GF form field names to valid XML element names
 * BUGFIX: Adding missing semicolon
