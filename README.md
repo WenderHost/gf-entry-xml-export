@@ -36,6 +36,16 @@ add_filter( 'gf_to_xml_array_keys', 'new_keys', 10, 2 );
 1. Upload the plugin to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
+## FAQs ##
+
+### How do I start the XML export of my entries? ###
+
+My code is hooked to `gform_after_submission`, so the plugin writes out the XML after a form is submitted. So, it doesn’t export existing entries, just new entries when they’re submitted.
+
+### Where do entries get exported? ###
+
+Entry XML files get exported here: `wp-content/uploads/xml/`
+
 ## Changelog ##
 
 ### 1.0.4 ###
