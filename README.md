@@ -3,7 +3,7 @@
 **Tags:** gravityforms, xml  
 **Requires at least:** 3.7  
 **Tested up to:** 4.7.4  
-**Stable tag:** 1.0.3  
+**Stable tag:** 1.1.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -47,6 +47,10 @@ My code is hooked to `gform_after_submission`, so the plugin writes out the XML 
 Entry XML files get exported here: `wp-content/uploads/xml/`
 
 ## Changelog ##
+
+### 1.1.0 ###
+* Setting a Gravity Forms field's "Admin Field Label" specifies the name of the XML tag used to hold the field's data in the XML export
+* Added special processing for a field's CSS classes. Currently there's only one optional class: `createdirectory` will use the value of the field to create a directory where the form's XML will be saved.
 
 ### 1.0.4 ###
 * Updating `$lead_source` variable to be `SITE_URL - PAGE_TITLE`

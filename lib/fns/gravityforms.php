@@ -14,6 +14,7 @@ function gforms_after_submission( $entry, $form )
     $sitename = str_replace( $url_search, '', $url );
     $sitename = str_replace( '.', '-', $sitename );
     $filename = $sitename . '_form-' . $entry['form_id'] . '_entry-' . $entry['id'] . '.xml';
+    $directory = 'xml';
 
     // Initialize array which will hold our form data
     $data = array();
@@ -30,18 +31,21 @@ function gforms_after_submission( $entry, $form )
                 if( isset( $input['isHidden'] ) && true == $input['isHidden'] )
                     continue;
 
-                $label = $input['label'];
+                $label = ( isset( $input['adminLabel'] ) && ! empty( $input['adminLabel'] ) )? $input['adminLabel'] : $input['label'];
                 $value = $entry[$input['id']];
                 $data[$label] = $value;
             }
         }
         else
         {
-            $label = $field['label'];
+            $label = ( isset( $field['adminLabel'] ) && ! empty( $field['adminLabel'] ) )? $field['adminLabel'] : $field['label'];
             $value = $entry[$field['id']];
             $data[$label] = $value;
             if( 'page_title' == $field['label'] )
                 $page_title = $value;
+            if( isset( $field['cssClass'] ) && ! empty( $field['cssClass'] ) ){
+                $data['cssClasses'][$label] = $field['cssClass'];
+            }
         }
     }
 
@@ -80,8 +84,26 @@ function gforms_after_submission( $entry, $form )
         }
     }
 
+    // Process CSS Classes
+    if( isset( $data['cssClasses'] ) && is_array( $data['cssClasses'] ) ){
+      foreach ($data['cssClasses'] as $label => $class ) {
+        switch( $class ){
+          case 'createdir':
+          case 'createdirectory':
+            $directory.= '/' . $data[$label];
+            break;
+
+          default:
+            // nothing
+            break;
+        }
+      }
+
+      unset( $data['cssClasses'] );
+    }
+
     // Generate XML
     $xml = \GFtoXML\ArrayToXml\ArrayToXml::convert( $data, 'form' );
-    \GFtoXML\files\write_file( $xml, $filename, 'xml' );
+    \GFtoXML\files\write_file( $xml, $filename, $directory );
 }
 add_action( 'gform_after_submission', __NAMESPACE__ . '\\gforms_after_submission', 10, 2 );
