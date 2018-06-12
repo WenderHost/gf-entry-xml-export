@@ -84,13 +84,19 @@ function gforms_after_submission( $entry, $form )
         }
     }
 
-    // Process CSS Classes
+    /**
+     * Process CSS Classes
+     *
+     * Utilize CSS classes for special operations. Current options:
+     *
+     * createdirectory - creates a directory using the field's submitted value as the directory name
+     */
     if( isset( $data['cssClasses'] ) && is_array( $data['cssClasses'] ) ){
       foreach ($data['cssClasses'] as $label => $class ) {
         switch( $class ){
           case 'createdir':
           case 'createdirectory':
-            $directory.= '/' . $data[$label];
+            $directory.= '/' . sanitize_title( $data[$label], 'undefined' );
             break;
 
           default:
