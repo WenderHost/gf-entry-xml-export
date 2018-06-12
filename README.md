@@ -31,6 +31,15 @@ function new_keys( $new_keys, $form_id )
 add_filter( 'gf_to_xml_array_keys', 'new_keys', 10, 2 );
 ```
 
+## Specifying where export files get saved ##
+
+By default, entry XML files get saved in `wp-content/uploads/xml/`. You can also configure your forms to save XML files in a sub-directory inside `wp-content/uploads/xml/`. Here's how to do it based on a user's selection:
+
+1. Create a user selectable field, and add options to the field with values that will be used for your sub-directory names.
+2. Under the "Appearance" tab for the field, add a *Custom CSS Class* called `createdirectory`.
+
+Now, when a user submits the form, his/her submission XML will be exported into a sub-directory of `wp-content/uploads/xml/`. That sub-directory will be named after the submitted value for the field with the `createdirectory`.
+
 ## Installation ##
 
 1. Upload the plugin to the `/wp-content/plugins/` directory
@@ -44,7 +53,7 @@ My code is hooked to `gform_after_submission`, so the plugin writes out the XML 
 
 ### Where do entries get exported? ###
 
-Entry XML files get exported here: `wp-content/uploads/xml/`
+Entry XML files get exported here: `wp-content/uploads/xml/`. Additionally, you may specify sub-directories where a form's entries are saved. This means you can have a form save entries in different sub-directories based on user-selected form values or by values present in hidden fields. See the section *Specifying where export files get saved* for more details.
 
 ## Changelog ##
 
