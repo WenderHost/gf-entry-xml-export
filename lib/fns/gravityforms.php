@@ -38,6 +38,26 @@ function gforms_after_submission( $entry, $form )
         }
         else
         {
+            /**
+             * Special processing for hidden fields
+             *
+             * Use the hidden field's label to trigger special processing:
+             *
+             * createdirectory - Use the value of the hidden field to save the form's
+             *   entries in a dir of the same name
+             */
+            if( 'hidden' == $field['type'] ){
+              switch( strtolower( $field['label'] ) ){
+                case 'createdirectory':
+                case 'createdir':
+                  $directory.= '/' . sanitize_title( $entry[$field['id']], 'undefined' );
+                  break;
+
+                default:
+                    // nothing
+              }
+            }
+
             $label = ( isset( $field['adminLabel'] ) && ! empty( $field['adminLabel'] ) )? $field['adminLabel'] : $field['label'];
             $value = $entry[$field['id']];
             $data[$label] = $value;
@@ -71,7 +91,11 @@ function gforms_after_submission( $entry, $form )
     // use to build the XML
     $data['lead_source'] = $lead_source;
 
-    // Rename keys
+    /**
+     * Rename keys
+     *
+     * @filter        gf_to_xml_array_keys
+     */
     $new_keys = [];
     $new_keys = apply_filters( 'gf_to_xml_array_keys', $new_keys, $entry['form_id'] );
     if( ! empty( $new_keys ) && is_array( $new_keys ) )
@@ -96,7 +120,8 @@ function gforms_after_submission( $entry, $form )
         switch( $class ){
           case 'createdir':
           case 'createdirectory':
-            $directory.= '/' . sanitize_title( $data[$label], 'undefined' );
+            if( 'xml' == $directory ) // check to see if dir hasn't already been changed
+              $directory.= '/' . sanitize_title( $data[$label], 'undefined' );
             break;
 
           default:

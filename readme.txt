@@ -3,7 +3,7 @@ Contributors: thewebist
 Tags: gravityforms, xml
 Requires at least: 3.7
 Tested up to: 4.7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,12 +33,24 @@ add_filter( 'gf_to_xml_array_keys', 'new_keys', 10, 2 );
 
 == Specifying where export files get saved ==
 
-By default, entry XML files get saved in `wp-content/uploads/xml/`. You can also configure your forms to save XML files in a sub-directory inside `wp-content/uploads/xml/`. Here's how to do it based on a user's selection:
+By default, entry XML files get saved in `wp-content/uploads/xml/`. You can also configure your forms to save XML files in a sub-directory inside `wp-content/uploads/xml/`. This can be achieved via either a user's selection for a drop down/radio field, or via a hidden field.
+
+**Save the export in a user selected sub-directory:**
+
+To save a form's export in a sub-directory based on a user's selection, do the following:
 
 1. Create a user selectable field, and add options to the field with values that will be used for your sub-directory names.
 2. Under the "Appearance" tab for the field, add a *Custom CSS Class* called `createdirectory`.
 
 Now, when a user submits the form, his/her submission XML will be exported into a sub-directory of `wp-content/uploads/xml/`. That sub-directory will be named after the submitted value for the field with the `createdirectory`.
+
+**Save the export via a hidden field specified sub-directory:**
+
+To save a form's export in a sub-directory defined by a hidden field value, do this:
+
+1. Create a hidden field.
+2. Name the field `createdirectory`.
+3. Set the value of the field to your preferred sub-directory name.
 
 == Installation ==
 
@@ -56,6 +68,9 @@ My code is hooked to `gform_after_submission`, so the plugin writes out the XML 
 Entry XML files get exported here: `wp-content/uploads/xml/`. Additionally, you may specify sub-directories where a form's entries are saved. This means you can have a form save entries in different sub-directories based on user-selected form values or by values present in hidden fields. See the section *Specifying where export files get saved* for more details.
 
 == Changelog ==
+
+= 1.2.0 =
+* Set the export sub-directory via a hidden field with the label of `createdirectory` and the value will be the name of the sub-directory.
 
 = 1.1.0 =
 * Setting a Gravity Forms field's "Admin Field Label" specifies the name of the XML tag used to hold the field's data in the XML export
