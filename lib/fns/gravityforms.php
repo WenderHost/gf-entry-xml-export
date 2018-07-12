@@ -60,7 +60,18 @@ function gforms_after_submission( $entry, $form )
 
             $label = ( isset( $field['adminLabel'] ) && ! empty( $field['adminLabel'] ) )? $field['adminLabel'] : $field['label'];
             $value = ( isset($entry[$field['id']]) )? $entry[$field['id']] : '';
-            $data[$label] = $value;
+            write_log('$data['.$label.'] = ' . $value,'GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+
+            if( ! array_key_exists( $label, $data ) ){
+              $data[$label] = $value;
+            } else {
+              if( ! empty( $value ) ){
+                $data[$label] = $value;
+              } else {
+                write_log('Skipping `'.$label.'` b/c $value is empty, and $data['.$label.'] exists.','GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+              }
+            }
+
             if( 'page_title' == $field['label'] )
                 $page_title = $value;
             if( isset( $field['cssClass'] ) && ! empty( $field['cssClass'] ) ){
