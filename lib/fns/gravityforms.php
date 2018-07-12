@@ -59,7 +59,7 @@ function gforms_after_submission( $entry, $form )
             }
 
             $label = ( isset( $field['adminLabel'] ) && ! empty( $field['adminLabel'] ) )? $field['adminLabel'] : $field['label'];
-            $value = $entry[$field['id']];
+            $value = ( isset($entry[$field['id']]) )? $entry[$field['id']] : '';
             $data[$label] = $value;
             if( 'page_title' == $field['label'] )
                 $page_title = $value;
@@ -133,8 +133,20 @@ function gforms_after_submission( $entry, $form )
       unset( $data['cssClasses'] );
     }
 
+    write_log('$data = ' . print_r( $data, true ), 'GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+
+    if( array_key_exists( 'phone', $data ) && empty( $data['phone'] ) )
+      write_log('WARNING: $data[\'phone\'] is empty!','GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+
+    if( array_key_exists( 'Phone', $data ) && empty( $data['Phone'] ) )
+      write_log('WARNING: $data[\'Phone\'] is empty!','GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+
     // Generate XML
     $xml = \GFtoXML\ArrayToXml\ArrayToXml::convert( $data, 'form' );
+
+    if( stristr( $xml, '<phone></phone>') )
+      write_log( 'Empty <phone></phone> found in XML.', 'GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+
     \GFtoXML\files\write_file( $xml, $filename, $directory );
 }
 add_action( 'gform_after_submission', __NAMESPACE__ . '\\gforms_after_submission', 10, 2 );
