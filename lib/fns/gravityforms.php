@@ -145,7 +145,7 @@ function gforms_after_submission( $entry, $form )
     $xml = \GFtoXML\ArrayToXml\ArrayToXml::convert( $data, 'form' );
 
     if( stristr( $xml, '<phone></phone>') )
-      write_log( 'Empty <phone></phone> found in XML.', 'GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+      write_log( 'Empty <phone></phone> found in XML for '.$directory.'/'.$filename.'.', 'GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
 
     \GFtoXML\files\write_file( $xml, $filename, $directory );
 }
