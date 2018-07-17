@@ -43,5 +43,7 @@ function write_file( $file_contents = '', $filename = 'file.txt', $dir = 'tmp' )
         $wp_filesystem->put_contents( $file_to_write, $file_contents );
     } else {
         write_log( 'ERROR: Unable to write file (' . $filename . '). $access_type = ' . $access_type );
+        if( defined( 'GFTOXML_ADMIN_EMAIL' ) )
+            wp_mail( GFTOXML_ADMIN_EMAIL, 'GFtoXML - Unable to write file', 'The GFtoXML Plugin was unable to write the file ('.$filename.'). The $access_type = ' . $access_type );
     }
 }
