@@ -60,7 +60,7 @@ function gforms_after_submission( $entry, $form )
 
             $label = ( isset( $field['adminLabel'] ) && ! empty( $field['adminLabel'] ) )? $field['adminLabel'] : $field['label'];
             $value = ( isset($entry[$field['id']]) )? $entry[$field['id']] : '';
-            write_log('$data['.$label.'] = ' . $value,'GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+            write_log('$data['.$label.'] = ' . $value );
 
             if( ! array_key_exists( $label, $data ) ){
               $data[$label] = $value;
@@ -68,7 +68,7 @@ function gforms_after_submission( $entry, $form )
               if( ! empty( $value ) ){
                 $data[$label] = $value;
               } else {
-                write_log('Skipping `'.$label.'` b/c $value is empty, and $data['.$label.'] exists.','GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+                write_log('Skipping `'.$label.'` b/c $value is empty, and $data['.$label.'] exists.' );
               }
             }
 
@@ -146,17 +146,10 @@ function gforms_after_submission( $entry, $form )
 
     write_log('$data = ' . print_r( $data, true ), 'GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
 
-    if( array_key_exists( 'phone', $data ) && empty( $data['phone'] ) )
-      write_log('WARNING: $data[\'phone\'] is empty!','GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
-
-    if( array_key_exists( 'Phone', $data ) && empty( $data['Phone'] ) )
-      write_log('WARNING: $data[\'Phone\'] is empty!','GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
-
     // Generate XML
     $xml = \GFtoXML\ArrayToXml\ArrayToXml::convert( $data, 'form' );
 
-    if( stristr( $xml, '<phone></phone>') )
-      write_log( 'Empty <phone></phone> found in XML for '.$directory.'/'.$filename.'.', 'GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+    write_log('XML = ' . $xml );
 
     \GFtoXML\files\write_file( $xml, $filename, $directory );
 }
