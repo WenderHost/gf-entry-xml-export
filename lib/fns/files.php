@@ -41,5 +41,7 @@ function write_file( $file_contents = '', $filename = 'file.txt', $dir = 'tmp' )
         $file_to_write = $target_dir . $filename;
         write_log( 'Writing file ' . $file_to_write );
         $wp_filesystem->put_contents( $file_to_write, $file_contents );
+    } else {
+        write_log( 'ERROR: Unable to write file (' . $filename . '). $access_type = ' . $access_type );
     }
 }
