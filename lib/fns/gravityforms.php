@@ -20,6 +20,7 @@ function gforms_after_submission( $entry, $form )
     $data = array();
     $data['time'] = date( 'c', strtotime( $entry['date_created'] ) );
 
+    write_log("\n\n" . str_repeat('-', 40 ) );
 
     // Map form data to an array
     foreach( $form['fields'] as $field )
@@ -144,12 +145,12 @@ function gforms_after_submission( $entry, $form )
       unset( $data['cssClasses'] );
     }
 
-    write_log('$data = ' . print_r( $data, true ), 'GFtoXML::' . basename(__FILE__) . '::' . __LINE__);
+    write_log('$data = ' . "\n" . print_r( $data, true ) );
 
     // Generate XML
     $xml = \GFtoXML\ArrayToXml\ArrayToXml::convert( $data, 'form' );
 
-    write_log('XML = ' . $xml );
+    write_log('XML = ' . "\n" . $xml );
 
     \GFtoXML\files\write_file( $xml, $filename, $directory );
 }
