@@ -7,7 +7,7 @@
  * Author URI:      https://michaelwender.com
  * Text Domain:     gf-entry-xml-export
  * Domain Path:     /languages
- * Version:         1.2.1
+ * Version:         1.2.2
  *
  * @package         Gf_Entry_Xml_Export
  */

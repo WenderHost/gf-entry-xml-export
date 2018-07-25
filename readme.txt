@@ -3,7 +3,7 @@ Contributors: thewebist
 Tags: gravityforms, xml
 Requires at least: 3.7
 Tested up to: 4.7.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -68,6 +68,9 @@ My code is hooked to `gform_after_submission`, so the plugin writes out the XML 
 Entry XML files get exported here: `wp-content/uploads/xml/`. Additionally, you may specify sub-directories where a form's entries are saved. This means you can have a form save entries in different sub-directories based on user-selected form values or by values present in hidden fields. See the section *Specifying where export files get saved* for more details.
 
 == Changelog ==
+
+= 1.2.2 =
+* BUGFIX: Checking for File System API inside `write_file()`.
 
 = 1.2.1 =
 * Skipping empty values when building form $data array for writing to XML. This should fix form exports from having empty values for required fields (e.g. empty telephone numbers).
