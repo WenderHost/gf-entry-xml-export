@@ -13,12 +13,24 @@ function gforms_after_submission( $entry, $form )
     $url_search = ['www.','http://','https://','.com','.net','.org','.biz','.us'];
     $sitename = str_replace( $url_search, '', $url );
     $sitename = str_replace( '.', '-', $sitename );
-    $filename = $sitename . '_form-' . $entry['form_id'] . '_entry-' . $entry['id'] . '.xml';
-    $directory = 'xml';
+    //$filename = $sitename . '_form-' . $entry['form_id'] . '_entry-' . $entry['id'] . '.xml';
+
+    //$filename = $entry['id'] . '.xml';
+
+    if( $entry['55'] ){
+      $filename = $entry['55'] . '.xml';
+      $directory = 'xml';
+    }
+    else if( $entry['48'] ){
+      $filename = $entry['48'] . '.xml';
+      $directory = 'xml';
+    }
 
     // Initialize array which will hold our form data
     $data = array();
     $data['time'] = date( 'c', strtotime( $entry['date_created'] ) );
+
+
 
     write_log("\n\n" . str_repeat('-', 40 ) );
 
@@ -34,6 +46,7 @@ function gforms_after_submission( $entry, $form )
 
                 $label = ( isset( $input['adminLabel'] ) && ! empty( $input['adminLabel'] ) )? $input['adminLabel'] : $input['label'];
                 $value = $entry[$input['id']];
+
                 $data[$label] = $value;
             }
         }
@@ -63,9 +76,14 @@ function gforms_after_submission( $entry, $form )
             $value = ( isset($entry[$field['id']]) )? $entry[$field['id']] : '';
             write_log('$data['.$label.'] = ' . $value );
 
+
+            $value = trim(str_replace('\/home\/esuvidop\/www\/esuvidop.myhostpoint.ch\/\/_export','',$value));
+
+
             if( ! array_key_exists( $label, $data ) ){
               $data[$label] = $value;
-            } else {
+            }
+            else {
               if( ! empty( $value ) ){
                 $data[$label] = $value;
               } else {
@@ -148,7 +166,7 @@ function gforms_after_submission( $entry, $form )
     write_log('$data = ' . "\n" . print_r( $data, true ) );
 
     // Generate XML
-    $xml = \GFtoXML\ArrayToXml\ArrayToXml::convert( $data, 'form' );
+    $xml = \GFtoXML\ArrayToXml\ArrayToXml::convert( $data, 'application' );
 
     write_log('XML = ' . "\n" . $xml );
 
