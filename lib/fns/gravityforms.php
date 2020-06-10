@@ -72,6 +72,11 @@ function gforms_after_submission( $entry, $form )
                 default:
                     // nothing
               }
+              if( stristr( $field['label'], 'skill' ) ){
+                $label = ( isset( $input['adminLabel'] ) && ! empty( $input['adminLabel'] ) )? $input['adminLabel'] : $input['label'];
+                $value = $entry[$input['id']];
+                $data[$label] = $value;
+              }
             }
 
             $label = ( isset( $field['adminLabel'] ) && ! empty( $field['adminLabel'] ) )? $field['adminLabel'] : $field['label'];
