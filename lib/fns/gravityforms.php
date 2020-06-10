@@ -162,10 +162,12 @@ function gforms_after_submission( $entry, $form )
       unset( $data['cssClasses'] );
     }
 
+    $data = apply_filters( 'gf_to_xml_filter_data', $data );
     write_log('$data = ' . "\n" . print_r( $data, true ) );
 
     // Generate XML
     $xml = \GFtoXML\ArrayToXml\ArrayToXml::convert( $data, 'application' );
+    $xml = apply_filters( 'gf_to_xml_filter_xml', $xml );
 
     write_log('XML = ' . "\n" . $xml );
 
