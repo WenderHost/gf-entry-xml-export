@@ -27,6 +27,13 @@ function digicube_filter_data( $data ){
           $data['documents'] = [];
           $x = 0;
           foreach ( $eval_value as $document ) {
+            // Here's how we handle umlauts and other unicode characters in uploaded filenames:
+
+            // Convert the codepoints to entities
+            $document = preg_replace("/\\\\u([0-9a-fA-F]{4})/", "&#x\\1;", $document );
+            // Convert the entities to a UTF-8 string
+            $document = html_entity_decode($document, ENT_QUOTES, 'UTF-8');
+
             $data['documents']['document' . $x ] = stripslashes( $document );
             $x++;
           }
