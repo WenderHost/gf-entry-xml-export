@@ -13,10 +13,11 @@ function gforms_after_submission( $entry, $form )
     $url_search = ['www.','http://','https://','.com','.net','.org','.biz','.us'];
     $sitename = str_replace( $url_search, '', $url );
     $sitename = str_replace( '.', '-', $sitename );
-    //$filename = $sitename . '_form-' . $entry['form_id'] . '_entry-' . $entry['id'] . '.xml';
-
+    $filename = $sitename . '_form-' . $entry['form_id'] . '_entry-' . $entry['id'] . '.xml';
+    $directory = 'xml';
     //$filename = $entry['id'] . '.xml';
 
+    /*
     if( $entry['55'] ){
       $filename = $entry['55'] . '.xml';
       $directory = 'xml';
@@ -25,6 +26,7 @@ function gforms_after_submission( $entry, $form )
       $filename = $entry['48'] . '.xml';
       $directory = 'xml';
     }
+    */
 
     // Initialize array which will hold our form data
     $data = array();
@@ -75,10 +77,7 @@ function gforms_after_submission( $entry, $form )
             $label = ( isset( $field['adminLabel'] ) && ! empty( $field['adminLabel'] ) )? $field['adminLabel'] : $field['label'];
             $value = ( isset($entry[$field['id']]) )? $entry[$field['id']] : '';
             write_log('$data['.$label.'] = ' . $value );
-
-
-            $value = trim(str_replace('\/home\/esuvidop\/www\/esuvidop.myhostpoint.ch\/\/_export','',$value));
-
+            //$value = trim(str_replace('\/home\/esuvidop\/www\/esuvidop.myhostpoint.ch\/\/_export','',$value));
 
             if( ! array_key_exists( $label, $data ) ){
               $data[$label] = $value;
