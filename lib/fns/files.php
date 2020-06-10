@@ -4,10 +4,7 @@ namespace GFtoXML\files;
 function write_file( $file_contents = '', $filename = 'file.txt', $dir = 'tmp' )
 {
     $upload_dir = \wp_upload_dir();
-    //$target_dir = \trailingslashit( $upload_dir['basedir'] . '/' . $dir );
-
-    $target_dir = \trailingslashit( get_home_path() . '/_export' );
-
+    $target_dir = \trailingslashit( $upload_dir['basedir'] . '/' . $dir );
 
     if( ! function_exists( '\get_filesystem_method' ) )
         require_once ABSPATH . 'wp-admin/includes/file.php';
