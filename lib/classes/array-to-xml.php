@@ -141,7 +141,7 @@ class ArrayToXml
         $key = preg_replace('/^[^a-zA-Z]{1}/', '', $key);
 
         // using regex to check for xml is overkill
-        $key = (strpos(strtolower($key), 'xml') === 0) ? substr($key, 3) : $key;
+        $key = (strpos($key, 'xml') === 0) ? substr($key, 3) : $key;
 
         // strips any whitespace
         $key = str_replace(' ', '', $key);
@@ -149,7 +149,7 @@ class ArrayToXml
         // remove invalid characters for XML element names
         $search = [':','?',',',';','/','\\','[',']'];
         $key = str_replace( $search, '', $key );
-        $key = strtolower( $key );
+        $key = $key;
 
         // convert double underscores to single underscore
         $search = ['__'];
