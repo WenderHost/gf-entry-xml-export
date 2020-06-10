@@ -126,19 +126,19 @@ class ArrayToXml
      */
     protected function addNode(DOMElement $element, $key, $value)
     {
-        $document = new DOMDocument("1.0","UTF-8");
-
         if ($this->replaceSpacesByUnderScoresInKeyNames) {
-            $key = str_replace(' ', '_', $key);
+            $search = [' ','(',')'];
+            $replace = ['_','_',''];
+            $key = str_replace($search, $replace, $key);
         }
+
+        if( empty( $key ) )
+            return;
 
         /* Normalize $key into a valid XML element name */
 
         // strips any non alphabetical character in the first position
-        //$key = preg_replace('/^[^a-zA-Z]{1}/', '', $key);
-        $key = preg_replace('/[^A-Za-z0-9_]/', '_', $key);
-        $key = preg_replace('/^([0-9]+)/', '_$1', $key);
-
+        $key = preg_replace('/^[^a-zA-Z]{1}/', '', $key);
 
         // using regex to check for xml is overkill
         $key = (strpos(strtolower($key), 'xml') === 0) ? substr($key, 3) : $key;
@@ -155,87 +155,9 @@ class ArrayToXml
         $search = ['__'];
         $key = str_replace( $search, '_', $key );
 
-
-        // if( $key == 'skill_1' ){
-        //     $div = $this->document->createElement("div");
-        //     //$element->insertBefore($div, $key);
-        //     $element->appendChild($div);
-        // }
-
-
-
-        if( $key == 'country' ){ //rename the country label to nationality
-            $key = 'nationality';
-        }
-
-
-                if( $key == 'startdate' ){ //rename the country label to nationality
-                   $bottoms= ['.'];
-                              $key = str_replace( '_', $bottoms , $key );
-                }
-
-        if( !empty($key)
-            && $key != 'untitled'
-            && $key != 'time'
-            && $key != 'entryid'
-            && $key != 'page_slug'
-            && $key != 'user_agent'
-            && $key != 'lead_source'
-            && $key != 'day'
-            && $key != 'month'
-            && $key != 'year'
-            && $key != 'st'
-            && $key != 'number'
-        && $key != 'skill_1_id'
-        && $key != 'skill_1_rating'
-        && $key != 'skill_2_id'
-        && $key != 'skill_2_rating'
-        && $key != 'skill_3_id'
-        && $key != 'skill_3_rating'
-        && $key != 'skill_4_id'
-        && $key != 'skill_4_rating'
-        && $key != 'skill_5_id'
-        && $key != 'skill_5_rating'
-        && $key != 'skill_6_id'
-        && $key != 'skill_6_rating'
-        && $key != 'consent'){
-
-            //$child = $this->document->createElement( htmlentities($key, ENT_XML1) );
-            $child = $this->document->createElement( utf8_encode($key) );
-
-
-
-            // $skills = $this->document->createElement('skills'); //create skills tree structure
-            // $element->appendChild($skills);
-
-            // $skill = $this->document->createElement('skill');
-            // $skills->appendChild($skill);
-
-
-
-            if( $key == 'skill' ){
-                // $newSubTopicText = $this->document->createTextNode('skill');
-                // $newSubTopic->appendChild($newSubTopicText);
-                // $specificNode->appendChild($newSubTopic);
-                // for( $i == 0; $i <= 6; $i++ ){
-                //     $add->addChild($key,$value);
-                //     //$add->addChild('mother','Liena');
-                // }
-            }
-
-
-
-            $element->appendChild($child);
-            $this->convertElement($child, $value);
-        }
-
-
-
-
-        //$child = $doc->createElement(htmlentities($header, ENT_XML1));
-
-        //$child = $this->document->createElement( $key );
-
+        $child = $this->document->createElement( $key ) ;
+        $element->appendChild($child);
+        $this->convertElement($child, $value);
     }
 
     /**
