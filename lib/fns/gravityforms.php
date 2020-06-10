@@ -46,7 +46,14 @@ function gforms_after_submission( $entry, $form )
                 if( isset( $input['isHidden'] ) && true == $input['isHidden'] )
                     continue;
 
-                $label = ( isset( $input['adminLabel'] ) && ! empty( $input['adminLabel'] ) )? $input['adminLabel'] : $input['label'];
+                // Handle both `adminLabel` and `customLabel` fields:
+                if( isset( $input['adminLabel'] ) && ! empty( $input['adminLabel'] ) ){
+                  $label = $input['adminLabel'];
+                } else if( isset( $input['customLabel'] ) && ! empty( $input['customLabel'] ) ){
+                  $label = $input['customLabel'];
+                } else {
+                  $label = $input['label'];
+                }
                 $value = $entry[$input['id']];
 
                 $data[$label] = $value;
